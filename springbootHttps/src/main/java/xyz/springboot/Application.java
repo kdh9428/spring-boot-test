@@ -1,6 +1,7 @@
 package xyz.springboot;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,11 @@ public class Application {
 	}
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(Application.class);
+		app.setWebApplicationType(WebApplicationType.NONE);
+		System.out.println("테스트 확인");
 		app.run(args);
 	}
-//
+// 
 //	@Bean
 //	public ServletWebServerFactory serverFactory() {
 //		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
