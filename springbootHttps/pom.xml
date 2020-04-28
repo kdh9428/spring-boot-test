@@ -56,6 +56,26 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+	<dependency>
+		<groupId>org.webjars.bower</groupId>
+		<artifactId>jquery</artifactId>
+		<version>3.5.0</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator-core -->
+	<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>webjars-locator-core</artifactId>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.fasterxml.jackson.dataformat</groupId>
+		<artifactId>jackson-dataformat-xml</artifactId>
+	</dependency>
+	
+		
 	</dependencies>
 
 	<build>
