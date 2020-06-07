@@ -55,5 +55,8 @@ class UserControllerTest {
 		.andExpect(xpath("/User/username").string("dahun"))
 		.andExpect(xpath("/User/password").string("123"))
 		.andDo(print());
+
+		List<String> list = Arrays.asList("aaa","bbb","ccc","abc","abcd");
+		list.stream().filter(s -> s.contains("a") && s.length()<=3).forEach(System.out::println);
 	}
 }

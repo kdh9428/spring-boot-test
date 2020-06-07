@@ -1,10 +1,15 @@
 package xyz.springboot.user;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.IntStream;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
+
+import com.google.common.base.Function;
 
 public class StreamEx {
 	int x;
@@ -41,6 +46,41 @@ public class StreamEx {
 		ss sstest = new cs();
 		System.out.println(sstest.testt());
 		
+		
+		List<String> ls = Arrays.asList("box","simple","Complex","Robot");
+		BinaryOperator<String> lc = (aa,bb) -> {
+			if(aa.length() > bb.length()) 
+				return aa;
+			else
+				return bb;
+		};
+		
+		String str = ls.stream().reduce("asdfgddg", lc);
+		System.out.println(str);
+		
+		ls = new ArrayList<>(ls);
+		ls.add("btod");
+		List<String> dfd =new ArrayList<String>();
+		dfd.add("asdf");
+		dfd.add("bsdff");
+		dfd.add("dsdffff");
+		dfd.add("fsd");
+		dfd.sort((ab,ac)->{
+			if(ab.length()<ac.length()) 
+				return 1;
+			else
+			return -1;
+		});
+		
+		System.out.println("================="+dfd+"================");
+		Consumer<List<String>> dd = (ad)->System.out.println(ad);
+		
+		dd.accept(dfd);
+		
+		println(1L,"dahun","test@email.com",(id, name, email)->"User info : id = "+id+ ", name = "+name+", email = "+email);
+		
+		Function3.staticTest();
+		
 	}
 	
 	public StreamEx add(int a) {
@@ -53,6 +93,22 @@ public class StreamEx {
 		return this;
 	}
 	
+	private static <T1, T2, T3> void println(T1 t1,T2 t2,T3 t3, Function3<T1, T2, T3, String> function) {
+		System.out.println(function.apply(t1, t2, t3));
+	}
+	
+}
+
+@FunctionalInterface
+interface Function3<T1, T2, T3, R>{
+	R apply(T1 t1, T2 t2, T3 t3);
+	
+	default void print (int i) {
+		System.out.println("테스트 확인.");
+	};
+	static void staticTest() {
+		System.out.println("스태틱 테스트!");
+	}
 }
 
 
