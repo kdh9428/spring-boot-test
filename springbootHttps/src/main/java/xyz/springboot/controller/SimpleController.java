@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class SimpleController {
 	
-	@GetMapping("/hello")
-	@ResponseBody
-	@CrossOrigin(origins = "http://localhost:18080")
-	public String hello(Model model) {
-		model.addAttribute("name","dahun");
-		return "hello";
-	}
+//	@GetMapping("/hello")
+//	@ResponseBody
+//	@CrossOrigin(origins = "http://localhost:18080")
+//	public String hello(Model model) {
+//		model.addAttribute("name","dahun");
+//		return "hello";
+//	}
 	
 	@GetMapping("/test")
 	@ResponseBody

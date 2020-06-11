@@ -54,5 +54,7 @@ class AccountRepositoryTest {
 		Optional<Account> nonExistingAccount = accountRepository.findByUsername("asdf");
 		assertThat(nonExistingAccount).isEmpty();
 		
+		
+		
 	}
 }
