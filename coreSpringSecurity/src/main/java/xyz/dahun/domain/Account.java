@@ -9,7 +9,6 @@ import javax.persistence.Id;
 @Entity
 @Data
 public class Account {
-
     @Id
     @GeneratedValue
     private Long Id;
@@ -18,5 +17,4 @@ public class Account {
     private String age;
     private String role;
     private String password;
-
 }
