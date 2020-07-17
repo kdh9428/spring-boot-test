@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,13 +14,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import xyz.dahun.security.handler.CustomAuthenticationSuccessHander;
 import xyz.dahun.security.provider.CustomAuthenticationProvider;
-import xyz.dahun.security.service.AccountContext;
-import xyz.dahun.security.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomAuthenticationSuccessHander successHander;
+
+    @Autowired
+    private AuthenticationDetailsSource authenticationDetailsSource;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -56,8 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/",true)
                 .loginProcessingUrl("/login_proc")
-                .defaultSuccessUrl("/")
+                .authenticationDetailsSource(authenticationDetailsSource)
+                .successHandler(successHander)
                 .permitAll();
     }
 }
