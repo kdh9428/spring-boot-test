@@ -1,5 +1,7 @@
 package xyz.dahun.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,8 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+   Logger logger =  LoggerFactory.getLogger(HomeController.class);
+
     @GetMapping("/")
     public String home() throws Exception{
+
+        logger.info("Home Controller Test Conde Logger Info");
         return "home";
     }
 }
