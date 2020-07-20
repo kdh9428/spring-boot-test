@@ -14,6 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import xyz.dahun.security.handler.CustomAccessDeniedHandler;
+import xyz.dahun.security.handler.CustomAuthenticationFailureHander;
 import xyz.dahun.security.handler.CustomAuthenticationSuccessHander;
 import xyz.dahun.security.provider.CustomAuthenticationProvider;
 
@@ -22,7 +26,10 @@ import xyz.dahun.security.provider.CustomAuthenticationProvider;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private CustomAuthenticationSuccessHander successHander;
+    private AuthenticationSuccessHandler successHander;
+
+    @Autowired
+    private CustomAuthenticationFailureHander customAuthenticationFailureHander;
 
     @Autowired
     private AuthenticationDetailsSource authenticationDetailsSource;
@@ -39,7 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationProvider authenticationProvider() {
         return new CustomAuthenticationProvider();
     }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -48,24 +54,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+        web.ignoring().antMatchers("/static/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/users").permitAll()
+                .antMatchers("/","/users","user/login/**","/login*").permitAll()
                 .antMatchers("/mypage").hasRole("USER")
                 .antMatchers("/messages").hasRole("MANAGER")
                 .antMatchers("/config").hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and()
+                ;
+
+        http
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/",true)
+                .defaultSuccessUrl("/")
                 .loginProcessingUrl("/login_proc")
                 .authenticationDetailsSource(authenticationDetailsSource)
                 .successHandler(successHander)
-                .permitAll();
+                .failureHandler(customAuthenticationFailureHander)
+                .permitAll()
+            ;
+        http.authorizeRequests()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler())
+                ;
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
+        customAccessDeniedHandler.setErrorPage("/denied");
+        return customAccessDeniedHandler;
     }
 }
