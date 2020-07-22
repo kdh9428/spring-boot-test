@@ -78,11 +78,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(customAuthenticationFailureHander)
                 .permitAll()
             ;
-        http.authorizeRequests()
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler())
-                ;
+//        http.authorizeRequests()
+//                .and()
+//                .exceptionHandling()
+//                .accessDeniedHandler(accessDeniedHandler())
+//                ;
     }
 
     @Bean
