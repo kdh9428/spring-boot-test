@@ -5,7 +5,9 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -16,6 +18,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import xyz.dahun.security.filter.AjaxLoginProcessingFilter;
 import xyz.dahun.security.handler.CustomAccessDeniedHandler;
 import xyz.dahun.security.handler.CustomAuthenticationFailureHander;
 import xyz.dahun.security.handler.CustomAuthenticationSuccessHander;
@@ -59,6 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http
+                .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+
         http
                 .authorizeRequests()
                 .antMatchers("/","/users","user/login/**","/login*").permitAll()
@@ -78,11 +86,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(customAuthenticationFailureHander)
                 .permitAll()
             ;
-//        http.authorizeRequests()
-//                .and()
-//                .exceptionHandling()
-//                .accessDeniedHandler(accessDeniedHandler())
-//                ;
+        http.authorizeRequests()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler())
+                ;
+        http.csrf().disable();
+
     }
 
     @Bean
@@ -90,5 +100,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
         customAccessDeniedHandler.setErrorPage("/denied");
         return customAccessDeniedHandler;
+    }
+
+    @Bean
+    public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
+        AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter();
+        ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManagerBean());
+        return ajaxLoginProcessingFilter;
+    }
+
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
