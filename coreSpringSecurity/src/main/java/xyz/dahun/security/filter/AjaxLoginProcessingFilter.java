@@ -30,23 +30,29 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
             throw new IllegalStateException("Authentication is not supported");
         }
 
-        AccountDto accountDto = objectMapper.readValue(request.getReader(), AccountDto.class);
+//        AccountDto accountDto = objectMapper.readValue(request.getReader(), AccountDto.class);
 
-        Optional<AccountDto> optionalAccountDto = Optional.ofNullable(accountDto);
 
-        boolean a = accountDto.getUsername() == null;
-        System.out.println(a);
+        Optional<AccountDto> accountDto = Optional.ofNullable(objectMapper.readValue(request.getReader(), AccountDto.class));
+//        Optional<AccountDto> optionalAccountDto = Optional.ofNullable(accountDto);
+        String username = accountDto.map(AccountDto::getUsername).orElseThrow(() -> new IllegalArgumentException("아이디 오류"));
+        String password = accountDto.map(AccountDto::getPassword).orElseThrow(() -> new IllegalArgumentException("비밀번호 오류"));
+
+
+//        Optional.ofNullable(accountDto.getUsername()).orElseThrow(() -> new IllegalArgumentException("아이디 오류"));
+
+
 //        System.out.println(optionalAccountDto.get().getUsername()+" : "+ optionalAccountDto.get().getPassword()+" : "+optionalAccountDto.get().getUsername().isBlank());
 
 //        optionalAccountDto.orElseThrow(() -> new IllegalArgumentException("Username or Password is Blank"));
 
 //        optionalAccountDto.filter(o -> !o.getUsername().isBlank() || !o.getPassword().isBlank()).orElseThrow(() -> new IllegalArgumentException("Username or Password is Empty"));
-    optionalAccountDto.filter(o -> o.getUsername().isBlank()).orElseThrow(IllegalAccessError::new);
-        if (StringUtils.isEmpty(accountDto.getUsername()) ||StringUtils.isEmpty(accountDto.getPassword())){
-            throw new IllegalStateException("error!!!");
-        }
+//    optionalAccountDto.filter(o -> o.getUsername().isBlank()).orElseThrow(IllegalAccessError::new);
+//        if (StringUtils.isEmpty(accountDto.getUsername()) ||StringUtils.isEmpty(accountDto.getPassword())){
+//            throw new IllegalStateException("error!!!");
+//        }
 
-        AjaxAuthenticationToken ajaxAuthenticationToken = new AjaxAuthenticationToken(optionalAccountDto.get().getUsername(), optionalAccountDto.get().getPassword());
+        AjaxAuthenticationToken ajaxAuthenticationToken = new AjaxAuthenticationToken(username, password);
 
         return getAuthenticationManager().authenticate(ajaxAuthenticationToken);
     }
