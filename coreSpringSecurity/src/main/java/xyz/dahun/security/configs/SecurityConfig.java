@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -22,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import xyz.dahun.security.filter.AjaxLoginProcessingFilter;
 import xyz.dahun.security.handler.CustomAccessDeniedHandler;
 import xyz.dahun.security.handler.CustomAuthenticationFailureHander;
-import xyz.dahun.security.handler.CustomAuthenticationSuccessHander;
 import xyz.dahun.security.provider.CustomAuthenticationProvider;
 
 @Configuration
@@ -104,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
-        AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter();
+        AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter("/api/login");
         ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManagerBean());
         return ajaxLoginProcessingFilter;
     }
