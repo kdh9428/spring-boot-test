@@ -41,9 +41,6 @@ public class AjaxAuthenticationToken extends AbstractAuthenticationToken {
         super.setAuthenticated(true); // must use super, as we override
     }
 
-    // ~ Methods
-    // ========================================================================================================
-
     public Object getCredentials() {
         return this.credentials;
     }
