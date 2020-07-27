@@ -57,7 +57,6 @@ public class AjaxAuthenticationToken extends AbstractAuthenticationToken {
 
         super.setAuthenticated(false);
     }
-
     @Override
     public void eraseCredentials() {
         super.eraseCredentials();
