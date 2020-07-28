@@ -16,9 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import xyz.dahun.security.handler.CustomAccessDeniedHandler;
-import xyz.dahun.security.handler.CustomAuthenticationFailureHander;
 import xyz.dahun.security.provider.CustomAuthenticationProvider;
 
 @Configuration
@@ -27,10 +27,10 @@ import xyz.dahun.security.provider.CustomAuthenticationProvider;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AuthenticationSuccessHandler successHander;
+    private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    private CustomAuthenticationFailureHander customAuthenticationFailureHander;
+    private AuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Autowired
     private AuthenticationDetailsSource authenticationDetailsSource;
@@ -74,8 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .loginProcessingUrl("/login_proc")
                 .authenticationDetailsSource(authenticationDetailsSource)
-                .successHandler(successHander)
-                .failureHandler(customAuthenticationFailureHander)
+                .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
                 .permitAll();
         http.authorizeRequests()
                 .and()
