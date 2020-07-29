@@ -33,7 +33,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
         Optional<AccountContext> optionalAccount = Optional.ofNullable((AccountContext) userDetailsService.loadUserByUsername(username));
 
-        AccountContext accountContext = optionalAccount.orElseThrow(() -> new IllegalArgumentException("어카운트 에러"));
+        AccountContext accountContext = optionalAccount.orElseThrow(() -> new IllegalArgumentException("AccountContext is Null"));
 
         if(!passwordEncoder.matches(password, accountContext.getPassword())){
             throw new BadCredentialsException("Password 인증 실패");
