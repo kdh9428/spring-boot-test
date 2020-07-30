@@ -1,6 +1,8 @@
 package xyz.dahun.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -31,8 +33,8 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
         }
 
         Optional<AccountDto> accountDto = Optional.ofNullable(objectMapper.readValue(request.getReader(), AccountDto.class));
-        String username = accountDto.map(AccountDto::getUsername).orElseThrow(() -> new IllegalArgumentException("Username is null"));
-        String password = accountDto.map(AccountDto::getPassword).orElseThrow(() -> new IllegalArgumentException("Password is null"));
+        String username = accountDto.map(AccountDto::getUsername).orElseThrow(() -> new InsufficientAuthenticationException("Username is null"));
+        String password = accountDto.map(AccountDto::getPassword).orElseThrow(() -> new InsufficientAuthenticationException("Password is null"));
 
         AjaxAuthenticationToken ajaxAuthenticationToken = new AjaxAuthenticationToken(username, password);
 
