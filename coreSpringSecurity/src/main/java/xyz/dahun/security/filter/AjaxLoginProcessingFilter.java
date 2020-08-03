@@ -1,5 +1,6 @@
 package xyz.dahun.security.filter;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -32,6 +33,13 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
             throw new IllegalStateException("Authentication method not supported:" + request.getMethod());
         }
 
+//        Map<String,Object> map = new HashMap<>();
+//        map = objectMapper.readValue(request.getReader(), new TypeReference<Map<String, Object>>() {
+//        });
+//        System.out.println(map.get("username"));
+//
+//        objectMapper.readValue(request.getReader(),AccountDto.class);
+
         Optional<AccountDto> accountDto = Optional.ofNullable(objectMapper.readValue(request.getReader(), AccountDto.class));
         String username = accountDto.map(AccountDto::getUsername).orElseThrow(() -> new InsufficientAuthenticationException("Username is null"));
         String password = accountDto.map(AccountDto::getPassword).orElseThrow(() -> new InsufficientAuthenticationException("Password is null"));
@@ -42,7 +50,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     }
 
     private boolean ajaxVerification(HttpServletRequest request) {
-        if("XMLHttpRequest".equals(request.getHeader("X-Requested-with"))){
+        if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))){
             return true;
         }
         return false;

@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MessageController {
 
-    @GetMapping("/messages")
+    @PostMapping("/messages")
     public String message() throws Exception{
         return "user/messages";
     }
 
-    @GetMapping("/api/messages")
+    @PostMapping("/api/messages")
     @ResponseBody
     public String apiMessage(){
         return "messages ok";

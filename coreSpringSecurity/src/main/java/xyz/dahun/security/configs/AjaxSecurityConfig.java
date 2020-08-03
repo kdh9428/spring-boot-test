@@ -51,13 +51,14 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatcher("/api/**")
                 .authorizeRequests()
                 .antMatchers("/api/messages").hasRole("MANAGER")
+                .antMatchers("/api/loginPage").permitAll()
                 .anyRequest().authenticated();
         http
                 .exceptionHandling()
                 .authenticationEntryPoint(new AjaxAuthenticationEntryPoint())
-                .accessDeniedHandler(ajaxAccessDeniedHandler())
-                ;
-        http.csrf().disable();
+                .accessDeniedHandler(ajaxAccessDeniedHandler());
+
+
     }
 
     @Bean

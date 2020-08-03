@@ -77,8 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
                 .permitAll();
-        http.authorizeRequests()
-                .and()
+        http
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler());
 

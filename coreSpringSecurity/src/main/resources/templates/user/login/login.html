@@ -4,39 +4,9 @@
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
+
 <head th:replace="layout/header::userHead"></head>
-<script>
 
-    function formLogin(){
-
-    var username = $("input[name='username']").val().trim();
-    var password = $("input[name='password']").val().trim();
-    var data = {"username" : username, "password" : password};
-
-    $.ajax({
-        type : "post",
-        url : "/api/login",
-        data : JSON.stringify(data),
-        dataType : "json",
-        beforeSend : function(xhr){
-            xhr.setRequestHeader("X-Requested-With" , "XMLHttpRequest");
-            xhr.setRequestHeader("Content-type" , "application/json");
-        },
-
-        success : function(data){
-            console.log(data);
-            window.location='/';
-        },
-        error : function(xhr, status, error) {
-            console.log(error);
-            window.location = '/login?error=true&exception='+xhr.responseText;
-
-        }
-    });
-
-    }
-
-</script>
 
 <body>
 <div th:replace="layout/top::header"></div>
@@ -52,10 +22,10 @@
             <form action = "/login_proc" th:action="@{/login_proc}" class="form-signin" method="post">
                 <input type="hidden" th:value="secret" name="secret_key" />
                 <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="아이디" required="required" autofocus="autofocus">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="아이디" required="required" autofocus="autofocus">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="비밀번호" required="required">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required="required">
                 </div>
 
                 <button type="button" onclick="formLogin()" id="formbtn" class="btn btn-lg btn-primary btn-block">Ajax 로그인</button>
@@ -64,5 +34,78 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+     function formLogin() {
+
+        var username = $("input[name='username']").val().trim();
+        var password = $("input[name='password']").val().trim();
+        var data = {
+        "username" : username,
+        "password" : password
+        }
+
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+
+        console.log(csrfToken);
+        $.ajax({
+            type: "post",
+            url: "/api/login",
+            data: JSON.stringify(data),
+            dataType: "json",
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                xhr.setRequestHeader("Content-type","application/json");
+            },
+            success: function (data) {
+                console.log(data);
+                window.location = '/';
+
+            },
+            error : function(xhr, status, error) {
+                console.log(error);
+                window.location = '/login?error=true&exception=' + xhr.responseText;
+            }
+        });
+    }
+
+<!--     function formLogin(){-->
+
+<!--        var username = document.querySelector("#username").value;-->
+<!--        var password = document.querySelector("#password").value;-->
+
+<!--        -->
+<!--        var csrfHeader = document.querySelector("meta[name='_csrf_header']").content;-->
+<!--        var csrfToken = document.querySelector("meta[name='_csrf']").content;-->
+
+<!--        var json = JSON.stringify({-->
+<!--                "username" : username,-->
+<!--                "password" : password-->
+<!--                });-->
+
+
+<!--        var xhr = new XMLHttpRequest();-->
+<!--        xhr.open('POST',"/api/login");-->
+<!--        xhr.setRequestHeader('Content-type','application/json; charset=UTF-8');-->
+<!--        xhr.setRequestHeader(csrfHeader, csrfToken);-->
+<!--        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');-->
+
+<!--        xhr.onload = () =>{-->
+<!--        var data = xhr.responseText;-->
+<!--            if(xhr.status == 200){-->
+<!--                console.log(data);-->
+<!--                window.location = '/';-->
+<!--            }else{-->
+<!--                console.log(xhr.error);-->
+<!--                window.location = '/login?error=true&exception=' +data;-->
+<!--            }-->
+<!--        }-->
+
+<!--        xhr.send(json);-->
+<!--    }-->
+</script>
 </body>
 </html>
