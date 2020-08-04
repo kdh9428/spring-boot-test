@@ -72,40 +72,40 @@
         });
     }
 
-<!--     function formLogin(){-->
+    //  function formLogin(){
 
-<!--        var username = document.querySelector("#username").value;-->
-<!--        var password = document.querySelector("#password").value;-->
-
-<!--        -->
-<!--        var csrfHeader = document.querySelector("meta[name='_csrf_header']").content;-->
-<!--        var csrfToken = document.querySelector("meta[name='_csrf']").content;-->
-
-<!--        var json = JSON.stringify({-->
-<!--                "username" : username,-->
-<!--                "password" : password-->
-<!--                });-->
+    //     var username = document.querySelector("#username").value;
+    //     var password = document.querySelector("#password").value;
 
 
-<!--        var xhr = new XMLHttpRequest();-->
-<!--        xhr.open('POST',"/api/login");-->
-<!--        xhr.setRequestHeader('Content-type','application/json; charset=UTF-8');-->
-<!--        xhr.setRequestHeader(csrfHeader, csrfToken);-->
-<!--        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');-->
+    //     var csrfHeader = document.querySelector("meta[name='_csrf_header']").content;
+    //     var csrfToken = document.querySelector("meta[name='_csrf']").content;
 
-<!--        xhr.onload = () =>{-->
-<!--        var data = xhr.responseText;-->
-<!--            if(xhr.status == 200){-->
-<!--                console.log(data);-->
-<!--                window.location = '/';-->
-<!--            }else{-->
-<!--                console.log(xhr.error);-->
-<!--                window.location = '/login?error=true&exception=' +data;-->
-<!--            }-->
-<!--        }-->
+    //     var json = JSON.stringify({
+    //             "username" : username,
+    //             "password" : password
+    //             });
 
-<!--        xhr.send(json);-->
-<!--    }-->
+
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open('POST',"/api/login");
+    //     xhr.setRequestHeader('Content-type','application/json; charset=UTF-8');
+    //     xhr.setRequestHeader(csrfHeader, csrfToken);
+    //     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    //     xhr.onload = () =>{
+    //     var data = xhr.responseText;
+    //         if(xhr.status == 200){
+    //             console.log(data);
+    //             window.location = '/';
+    //         }else{
+    //             console.log(xhr.error);
+    //             window.location = '/login?error=true&exception=' +data;
+    //         }
+    //     }
+
+    //     xhr.send(json);
+    // }
 </script>
 </body>
 </html>

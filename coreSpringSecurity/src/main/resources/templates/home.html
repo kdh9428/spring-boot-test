@@ -11,15 +11,18 @@
 	var csrfToken = $('meta[name="_csrf"]').attr('content')
     
     $.ajax({
-        type : "POST",
+        type : "post",
         url : "/api/messages",
-        dataType : "json",
+<!--        dataType : "json",-->
         beforeSend : function(xhr){
             xhr.setRequestHeader(csrfHeader, csrfToken);
             xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             xhr.setRequestHeader("Content-type" , "application/json");
         },
-
+        success : function(data){
+               console.log("성공"+data);
+               window.location = "/messages";
+        },
         error : function(xhr, status, error) {
             console.log(error);
 			if(xhr.responseJSON.status == '401'){
@@ -30,10 +33,7 @@
         }
     });
     }
-
-
 </script>
-
 <body>
 <div th:replace="layout/top::header"></div>
 <div class="container">
