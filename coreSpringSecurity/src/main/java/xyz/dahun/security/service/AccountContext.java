@@ -2,7 +2,7 @@ package xyz.dahun.security.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import xyz.dahun.domain.Account;
+import xyz.dahun.domain.entity.Account;
 
 import java.util.Collection;
 

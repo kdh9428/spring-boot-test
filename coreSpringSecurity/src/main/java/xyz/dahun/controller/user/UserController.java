@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import xyz.dahun.domain.Account;
-import xyz.dahun.domain.AccountDto;
+import xyz.dahun.domain.entity.Account;
+import xyz.dahun.domain.dto.AccountDto;
 import xyz.dahun.service.UserService;
 
 @Controller

@@ -2,7 +2,7 @@ package xyz.dahun.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.dahun.domain.Account;
+import xyz.dahun.domain.entity.Account;
 import xyz.dahun.repository.UserRepository;
 import xyz.dahun.service.UserService;
 

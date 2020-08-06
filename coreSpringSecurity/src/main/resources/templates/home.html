@@ -11,7 +11,7 @@
 	var csrfToken = $('meta[name="_csrf"]').attr('content')
     
     $.ajax({
-        type : "post",
+        type : "POST",
         url : "/api/messages",
 <!--        dataType : "json",-->
         beforeSend : function(xhr){

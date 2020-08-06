@@ -1,15 +1,12 @@
 package xyz.dahun.security.filter;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.util.StringUtils;
-import xyz.dahun.domain.AccountDto;
+import xyz.dahun.domain.dto.AccountDto;
 import xyz.dahun.security.token.AjaxAuthenticationToken;
 
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package xyz.dahun.domain;
+package xyz.dahun.domain.entity;
 
 import lombok.Data;
 
